@@ -1,0 +1,17 @@
+{
+    "contents" : "---\ntitle: \"Reproducible Research: Peer Assessment 1\"\noutput: \n  html_document:\n    keep_md: true\n---\n\n\n## Loading and preprocessing the data\n```r\n## reading file \ntryCatch(\n    unzip(\"activity.zip\", overwrite = FALSE, exdir = \"figure\"), \n    warning = function(w) \"file already exists\")\ninitActiv <- read.csv(\"figure/activity.csv\")    \n\n## adding new useful dimensions ##\ninitActiv$hour <- floor(initActiv$interval / 60)\ninitActiv$minute <- initActiv$interval - initActiv$hour*60\ninitActiv$datetime <- as.POSIXlt(\n    paste(initActiv$date, initActiv$hour, initActiv$minute, sep = \" \"), \n    format = \"%Y-%m-%d %H %M\")    \n```\n## What is mean total number of steps taken per day?\n\n\n\n## What is the average daily activity pattern?\n\n\n\n## Imputing missing values\n\n\n\n## Are there differences in activity patterns between weekdays and weekends?\n",
+    "created" : 1442439813889.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2504549672",
+    "id" : "79F5A62F",
+    "lastKnownWriteTime" : 1442441929,
+    "path" : "~/Documents/R/Rep_research/RepData_PeerAssessment1/PA1_template.Rmd",
+    "project_path" : "PA1_template.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
