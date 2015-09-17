@@ -4,14 +4,15 @@ output:
   html_document:
     keep_md: true
 ---
-
+```{r setoptions, echo=FALSE}
+library(knitr)
+opts_chunk$set(cashe = FALSE)
+```
 
 ## Loading and preprocessing the data
-```r
+```{r reading_file, results='hide'}
 ## reading file 
-tryCatch(
-    unzip("activity.zip", overwrite = FALSE, exdir = "figure"), 
-    warning = function(w) "file already exists")
+#unzip("activity.zip", overwrite = FALSE, exdir = "figure")
 initActiv <- read.csv("figure/activity.csv")    
 
 ## adding new useful dimensions ##
@@ -22,11 +23,25 @@ initActiv$datetime <- as.POSIXlt(
     format = "%Y-%m-%d %H %M")    
 ```
 ## What is mean total number of steps taken per day?
+```{r}
+steps_daily <- tapply(initActiv$steps, initActiv$date, sum, na.rm = TRUE)
 
+mean(steps_daily)
+median(steps_daily)
+
+hist(steps_daily, breaks = 10, col = "green", xlab = "steps per day", 
+     main = "frequancy of steps per day")
+```
 
 
 ## What is the average daily activity pattern?
+```{r}
+steps_5min <- tapply(initActiv$steps, initActiv$interval, mean, na.rm = TRUE)
 
+plot(y = steps_5min, x = names(steps_5min), type = "l")
+
+names(steps_5min)[steps_5min == max(steps_5min)]
+```
 
 
 ## Imputing missing values

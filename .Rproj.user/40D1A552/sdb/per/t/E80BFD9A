@@ -1,0 +1,17 @@
+{
+    "contents" : "source(\"prepare_dataset.R\")\n\nwindows.options(width=480, height=480)\npar(mfrow = c(1, 1))\n\n### Plot 1\nhist(hpc_obs$Global_active_power, col = \"red\", xlab = \"Global Active Power (kilowatts)\", main = \"Global Active Power\")\n\ndev.copy(png, file = \"plot1.png\")\ndev.off()\n",
+    "created" : 1442523773651.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2148595664",
+    "id" : "E80BFD9A",
+    "lastKnownWriteTime" : 1442434618,
+    "path" : "~/Documents/R/Coursers_expl/ExData_Plotting1/plot1.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
