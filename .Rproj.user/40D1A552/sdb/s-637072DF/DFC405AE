@@ -1,0 +1,17 @@
+{
+    "contents" : "source(\"prepare_dataset.R\")\n\n\n### Plot 4\n\npar(mfrow = c(2, 2))#, mar = c(5, 4, 4, 2) + 0.1, mai = c(0.5, 0.5, 0.5, 0.5))\n{\nplot(x = hpc_obs$DateTime,\n     y = hpc_obs$Global_active_power,\n     type = \"l\",\n     ylab = \"Global Active Power\",\n     xlab = \"\"\n)\n\nplot(x = hpc_obs$DateTime,\n     y = hpc_obs$Voltage,\n     type = \"l\",\n     ylab = \"Voltage\",\n     xlab = \"datetime\")\n\nplot(x = hpc_obs$DateTime,\n     y = hpc_obs$Sub_metering_1,\n     col = \"black\",\n     type = \"l\",\n     ylab = \"Energy sub metering\",\n     xlab = \"\"\n)\n\nlines(x = hpc_obs$DateTime,\n      y = hpc_obs$Sub_metering_2,\n      col = \"green\")\n\nlines(x = hpc_obs$DateTime,\n      y = hpc_obs$Sub_metering_3,\n      col = \"blue\")\n\nlegend(\"topright\",\n       pch = \"\", # label\n       bty = \"n\", # no border for legend box\n       col = c(\"black\" , \"green\", \"blue\"), # colors of lines\n       legend = c(\"Sub_metering_1\", \"Sub_metering_2\", \"Sub_metering_3\"), # names of lines\n       lwd = 1, # label width\n       lty = 1, # label line type (default)\n       #x.intersp = 2,\n       adj = c(0.1),\n       cex = 0.8\n       \n)\n\nplot(x = hpc_obs$DateTime,\n     y = hpc_obs$Global_reactive_power,\n     type = \"l\",\n     xlab = \"datetime\",\n     ylab = \"Global_reactive_power\")\n\n}\ndev.copy(png, file = \"plot4.png\")\ndev.off()\n",
+    "created" : 1442785619489.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1471893678",
+    "id" : "DFC405AE",
+    "lastKnownWriteTime" : 1442434618,
+    "path" : "~/Documents/R/Coursers_expl/ExData_Plotting1/plot4.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,0 +1,17 @@
+{
+    "contents" : "---\ntitle: \"Reproducible Research: Peer Assessment 1\"\noutput: \n  html_document:\n    keep_md: true\n---\n```{r setoptions, echo=FALSE}\nlibrary(knitr)\nlibrary(plyr)\nlibrary(lattice)\nlibrary(reshape2)\nopts_chunk$set(cashe = FALSE)\n```\n\n## Loading and preprocessing the data\n```{r reading_file, results='hide'}\n## reading file \n#unzip(\"activity.zip\", overwrite = FALSE, exdir = \"figure\")\ninitActiv <- read.csv(\"figure/activity.csv\")    \n\n## adding new useful dimensions ##\ninitActiv$hour <- floor(initActiv$interval / 60)\ninitActiv$minute <- initActiv$interval - initActiv$hour*60\ninitActiv$datetime <- as.POSIXlt(\n    paste(initActiv$date, initActiv$hour, initActiv$minute, sep = \" \"), \n    format = \"%Y-%m-%d %H %M\")\ninitActiv$date <- as.Date(initActiv$date)\n```\n## What is mean total number of steps taken per day?\n```{r mean_steps_per_day}\nsteps_daily <- tapply(initActiv$steps, initActiv$date, sum, na.rm = TRUE)\n\nmean(steps_daily)\nmedian(steps_daily)\n\nhist(steps_daily, breaks = 10, col = \"green\", xlab = \"steps per day\", \n     main = \"frequancy of steps per day\")\n```\n\n\n## What is the average daily activity pattern?\n```{r avg_daily_pattern}\nsteps_5m<- tapply(initActiv$steps, initActiv$interval, mean, na.rm = TRUE)\n\nplot(y = steps_5m, x = names(steps_5m), type = \"l\",\n    xlab = \"minutes from the begining of day\",\n    ylab = \"average steps\",\n    main = \"Average daily activity pattern\")\n```\n\n```{r}\nmax_steps_val <- max(steps_5m)\nmax_steps_period <- as.integer(names(steps_5m)[steps_5m == max_steps_val])\n```\nThe most active period is between `r max_steps_period` and \n`r max_steps_period + 5` minutes from the beginig of day. \nAverage steps in this period are `r round(max_steps_val, 2)`\n\n\n## Imputing missing values\nI'll use average steps in every 5 minutes interval to fill missed values  \n```{r missed_values}\nnew_active <- initActiv\nsum(is.na(new_active$steps))\nnew_active$steps[is.na(new_active$steps)] <- as.integer(steps_5m[as.character(new_active$interval[is.na(new_active$steps)])])\nsum(is.na(new_active$steps))\n\nnew_steps_daily <- tapply(new_active$steps, new_active$date, sum, na.rm = TRUE)\n\nmean(new_steps_daily)\nmedian(new_steps_daily)\n\nhist(new_steps_daily, breaks = 10, col = \"green\", xlab = \"steps per day\", \n     main = \"frequancy of steps per day\")\n\n```  \n\nAfter filling missed values, both mean and median become higher.\n\n## Are there differences in activity patterns between weekdays and weekends?\n\n```{r}\nnew_active$weekday <- weekdays(new_active$date)\nnew_active$is_weekend <- \"weekday\"\nnew_active$is_weekend[new_active$weekday %in% c(\"Saturday\", \"Sunday\")] <- \"weekend\"\n\nx <- as.data.frame(tapply(new_active$steps, new_active[, c(\"interval\", \"is_weekend\")], mean))\nx$interval <- as.numeric(rownames(x))\nx <- melt(x, id = c(\"interval\"), measure.vars = c(\"weekday\", \"weekend\"))\nnames(x) <- c(\"interval\", \"is_weekend\", \"steps\")\nxyplot(steps ~ interval | is_weekend, data = x, type = \"a\", layout = c(1, 2))\n```\n\n",
+    "created" : 1442439813889.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2638355283",
+    "id" : "79F5A62F",
+    "lastKnownWriteTime" : 1442790131,
+    "path" : "~/Documents/R/Rep_research/RepData_PeerAssessment1/PA1_template.Rmd",
+    "project_path" : "PA1_template.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
