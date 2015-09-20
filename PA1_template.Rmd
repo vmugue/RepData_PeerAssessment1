@@ -89,5 +89,6 @@ x$interval <- as.numeric(rownames(x))
 x <- melt(x, id = c("interval"), measure.vars = c("weekday", "weekend"))
 names(x) <- c("interval", "is_weekend", "steps")
 xyplot(steps ~ interval | is_weekend, data = x, type = "a", layout = c(1, 2))
+
 ```
 
